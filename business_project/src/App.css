@@ -1,0 +1,136 @@
+.header{
+  display: flex;
+ align-items: center;
+ background-color: #00425A;
+ border-radius: 10px;
+ padding: 10px;
+ margin-bottom: 25px;
+
+}
+h1{
+  margin-right: auto;
+}
+h2{
+  margin: 15px;
+}
+h3{
+  align-items: center;
+  
+}
+.tracks {
+  margin: 10px;
+  background-color: #7B8FA1;
+  border-radius: 10px;
+  height: 100%;
+  width: 32%;
+  align-items: center;  
+  display: flex;
+justify-content: center;
+flex-direction: column;
+
+
+} 
+
+.container{
+  display: flex;
+  flex-wrap: wrap;
+ 
+}
+.booking-timelines{
+  display: flex;
+  flex-wrap: wrap;
+}
+.timeline{
+  margin:15px;
+}
+form {
+  width: 300px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-top: 1em;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+input, textarea {
+  margin-top: 0.5em;
+  padding: 0.5em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  background: #ccc;
+  color: #fff;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.links{
+  color:black;
+}
+.success{
+  text-align: center;
+}
+.booked-times:hover{
+  color: red;
+  cursor: pointer;
+}
+.timeline{
+  cursor: pointer;
+}
+
+
+
+.timeline-div{
+  background-color:#7B8FA1 ;
+  border-radius: 15px;
+  margin:  15px;
+}
+.userData{
+  margin-left: 300px;
+  margin-right: 300px;
+  border-radius: 15px;
+  background-color: #7B8FA1;
+  height: 100%;
+  align-items: center;  
+  display: flex;
+justify-content: center;
+flex-direction: column;
+}
+.userTrackInfo-1 {
+  margin: auto;
+}
+.userTrackInfo-2{
+  margin: auto;
+  margin-top: 80px;
+}
+select {
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 220px;
+  background-color: #00425A
+}
+
+option {
+  font-size: 14px;
+  padding: 10px;
+}
+option:hover {
+  background-color: #7B8FA1;
+}
+p {
+  font-size: 16px;
+  margin-top: 10px;}
