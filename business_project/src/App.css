@@ -27,9 +27,15 @@ h3{
   display: flex;
 justify-content: center;
 flex-direction: column;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+transition: transform 0.3s ease;
 
 
 } 
+.tracks:hover {
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.25);
+  transform: translateZ(50px);
+}
 
 .container{
   display: flex;
@@ -39,6 +45,13 @@ flex-direction: column;
 .booking-timelines{
   display: flex;
   flex-wrap: wrap;
+ 
+}
+.timeline-div{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+.timeline-div:hover{
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
 }
 .timeline{
   margin:15px;
@@ -96,6 +109,8 @@ button {
   background-color:#7B8FA1 ;
   border-radius: 15px;
   margin:  15px;
+  width: 220px;
+  height: 180px;
 }
 .userData{
   margin-left: 300px;
@@ -134,3 +149,9 @@ option:hover {
 p {
   font-size: 16px;
   margin-top: 10px;}
+.slots-list-element{
+margin: 10px;
+}
+.booking-timelines{
+  margin: auto;
+}

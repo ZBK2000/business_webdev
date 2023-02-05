@@ -47,7 +47,7 @@ app.post("/tracks", async function(req, res){
   let text
   for (let booked in req.body.h3s){
     if (req.body.h3s[booked].id ==req.body.time_id){
-        text = req.body.h3s[booked].text
+        text = req.body.h3s[booked].text.split(" ")[0]
         break
     }
   }
@@ -76,12 +76,23 @@ app.post("/user", async function(req, res){
 app.post("/cancel", async function(req, res){
       console.log(req.body)
       const doc = await TrackModel.findOne({  name: req.body.nameOfTrack })
+      console.log(doc)
       const bookedTimes = doc.booked[req.body.rightDay]
       for (let times in bookedTimes){
         if (bookedTimes[times].text.indexOf(req.body.timeline.split(" ")[0]) !== -1) {
           console.log(req.body.timeline.split(" ")[0])
-          bookedTimes[times].text = `${req.body.timeline.split(" ")[0]} `
-          bookedTimes[times].color = "black"
+          if(!bookedTimes[times].slots.includes("")){
+            bookedTimes[times].color = "black"
+            bookedTimes[times].text = `${req.body.timeline.split(" ")[0]} `
+          }
+          bookedTimes[times].slots = bookedTimes[times].slots.map(slot => {
+            if (slot == req.body.id){
+              return ""
+
+            }
+            return slot
+          })
+          
           break
         }
       }

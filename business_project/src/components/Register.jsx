@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
+import AvailablePlaces from "./avalaiblePlaces";
 
 export default function register (props){
         const navigate = useNavigate()
@@ -8,15 +9,17 @@ export default function register (props){
         const [price, setPrice] = useState("");
         const [location, setLocation] = useState("");
         const [description, setDescription] = useState("");
+        //const [slots, setSlots] = useState(4)
         const avalaibleTimes = [
-            { id: 1, text: "8-10 ", color: "black" },
-            { id: 2, text: "10-12 ", color: "black" },
-            { id: 3, text: "12-14 ", color: "black" },
-            { id: 4, text: "14-16 ", color: "black" },
-            { id: 5, text: "16-18 ", color: "black" },
-            { id: 6, text: "18-20 ", color: "black" },
-            { id: 7, text: "20-22 ", color: "black" }
+            { id: 1, text: "8-10 ", color: "black" ,slots: ["","","",""]},
+            { id: 2, text: "10-12 ", color: "black" ,slots: ["","","",""]},
+            { id: 3, text: "12-14 ", color: "black" ,slots: ["","","",""]},
+            { id: 4, text: "14-16 ", color: "black" ,slots: ["","","",""]},
+            { id: 5, text: "16-18 ", color: "black" ,slots: ["","","",""]},
+            { id: 6, text: "18-20 ", color: "black" ,slots: ["","","",""]},
+            { id: 7, text: "20-22 ", color: "black" ,slots: ["","","",""]}
           ]
+          
           function getNext7Days() {
             const next7Days = [];
             const today = new Date();
@@ -36,6 +39,7 @@ export default function register (props){
         const next7Days = getNext7Days()
         next7Days.forEach(key => {
             avalaibleTimesFor7Days[key] = avalaibleTimes})
+
         const registerTrack = async (event) => {
             event.preventDefault();
             const data = {track: {name, price, location, description, booked: avalaibleTimesFor7Days, next7Days}, user:props.getDownData2};
@@ -49,6 +53,7 @@ export default function register (props){
             const allTrack = await response.json();
         
             props.getUpData(allTrack)
+            //props.getUpData2(slots)
             navigate("/")
         }
     
@@ -64,6 +69,8 @@ export default function register (props){
                 <input type="text" id="price" onChange={(e) => setPrice(e.target.value)} />
                 <label htmlFor="location">Location:</label>
                 <input type="text" id="location" onChange={(e) => setLocation(e.target.value)} />
+                {/* <label htmlFor="slots">Maximum slots:</label>
+                <input type="number" step="1" id="slots" onChange={(e) => setSlots(e.target.value)} /> */}
                 <label htmlFor="desc">Description:</label>
                 <textarea  id="desc" onChange={(e) => setDescription(e.target.value)} />
                 <button>Submit</button>

@@ -2,6 +2,7 @@ import Header from "./Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Next7DaysDropdown from "./nextSevenDay";
+import AvailablePlaces from "./avalaiblePlaces";
 
 export default function CertainTrack (props){
   const today = new Date();
@@ -14,13 +15,13 @@ export default function CertainTrack (props){
   const [rightDay, setRightDay] = useState(today_time)
   console.log(rightDay)
   const [h3s, setH3s] = useState([
-    { id: 1, text: "8-10 ", color: "black" },
-    { id: 2, text: "10-12 ", color: "black" },
-    { id: 3, text: "12-14 ", color: "black" },
-    { id: 4, text: "14-16 ", color: "black" },
-    { id: 5, text: "16-18 ", color: "black" },
-    { id: 6, text: "18-20 ", color: "black" },
-    { id: 7, text: "20-22 ", color: "black" }
+    { id: 1, text: "8-10 ", color: "black" ,slots: ["","","",""]},
+    { id: 2, text: "10-12 ", color: "black" ,slots: ["","","",""]},
+    { id: 3, text: "12-14 ", color: "black" ,slots: ["","","",""]},
+    { id: 4, text: "14-16 ", color: "black" ,slots: ["","","",""]},
+    { id: 5, text: "16-18 ", color: "black" ,slots: ["","","",""]},
+    { id: 6, text: "18-20 ", color: "black" ,slots: ["","","",""]},
+    { id: 7, text: "20-22 ", color: "black" ,slots: ["","","",""]}
   ]);
  // const [track, setTrack] = useState("")
    const [lastClickedId, setLastClickedId] = useState(null);
@@ -28,15 +29,31 @@ export default function CertainTrack (props){
 const handleClick = async (id) => {
     setH3s(h3s.map((h3) => {
       if (h3.id === id) {
+        if (h3.slots.includes(props.getDownData2)) {
+  return h3;
+}
+        let place = h3.slots
+        let last
+        for (let slot in h3.slots){
+          if (h3.slots[slot] == ""){
+            place[slot] = props.getDownData2
+            if (slot == h3.slots.length - 1){
+              last = true
+            } 
+            break
+          }
+        }
+        setLastClickedId([id, place])
         return {
           ...h3,
-          text: h3.text + "booked by " + props.getDownData2 ,
-          color: "red",
+          slots : place,
+          color: last ? "red": "black",
+          text: last ? `${h3.text} FULL`: h3.text
         };
       }
       return h3;
     }));
-    setLastClickedId(id);
+    
     console.log(id)
     
 };
@@ -45,7 +62,7 @@ useEffect(() => {
     async function fethcing(){
       console.log(lastClickedId)
     if(lastClickedId){
-    const data = {rightDay: rightDay, h3s: h3s, id: nameOfTrack, user: props.getDownData2, time_id: lastClickedId};
+    const data = {rightDay: rightDay, h3s: h3s, id: nameOfTrack, user: props.getDownData2, time_id: lastClickedId[0]};
     console.log(data, "hanyszor")
    const response = await fetch(`http://localhost:3000/tracks`, {
         method: "POST",
@@ -96,13 +113,13 @@ useEffect(()=>{
       fetch(`http://localhost:3000/newDay`, {
         method: "POST",
         body: JSON.stringify({id: nameOfTrack, rightDay: rightDay, h3s: [
-          { id: 1, text: "8-10 ", color: "black" },
-          { id: 2, text: "10-12 ", color: "black" },
-          { id: 3, text: "12-14 ", color: "black" },
-          { id: 4, text: "14-16 ", color: "black" },
-          { id: 5, text: "16-18 ", color: "black" },
-          { id: 6, text: "18-20 ", color: "black" },
-          { id: 7, text: "20-22 ", color: "black" }
+          { id: 1, text: "8-10 ", color: "black" ,slots: ["","","",""]},
+          { id: 2, text: "10-12 ", color: "black" ,slots:["","","",""]},
+          { id: 3, text: "12-14 ", color: "black" ,slots: ["","","",""]},
+          { id: 4, text: "14-16 ", color: "black" ,slots:["","","",""]},
+          { id: 5, text: "16-18 ", color: "black" ,slots:["","","",""]},
+          { id: 6, text: "18-20 ", color: "black" ,slots: ["","","",""]},
+          { id: 7, text: "20-22 ", color: "black" ,slots: ["","","",""]}
         ]}),
         headers: {
             "Content-Type": "application/json"}
@@ -127,8 +144,9 @@ useEffect(()=>{
 
     return (<div>
         <Header title={id}  success={props.getDownData} name={props.getDownData2}/>
-         <Next7DaysDropdown getUpData={setRightDay}/> 
+        
          {errorhandler ?<h1>Please log in to see the page of this track</h1>: <div><h1>{desc}</h1>
+         <Next7DaysDropdown getUpData={setRightDay}/> 
         <div className="booking-timelines">
         {h3s.map((h3) => (<div  className="timeline-div">
         <h3 className="timeline"
@@ -137,7 +155,10 @@ useEffect(()=>{
           onClick={h3.color === "red" ? ()=>{}: () => handleClick(h3.id) }
         >
          {h3.text } 
-        </h3></div>
+        </h3>
+        {h3.slots.map((slot) =>(
+          <li className="slots-list-element">{slot}</li>
+        ))}</div>
       ))}
         </div></div> }
        
