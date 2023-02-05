@@ -51,11 +51,13 @@ app.post("/tracks", async function(req, res){
         break
     }
   }
-  await UserModel.findOneAndUpdate({  user: req.body.user }, { $push: { booked_tracks: `${req.body.id}: ${text}`}}, { new: true });
+  await UserModel.findOneAndUpdate({  user: req.body.user }, { $push: { booked_tracks: `${req.body.id}: ${req.body.rightDay} ${text}`}}, { new: true });
   console.log(req.body)
+  
   if(existingTrack){
     if (req.body.h3s){
-    const doc = await TrackModel.findOneAndUpdate({  name: req.body.id }, { $set: { booked: req.body.h3s}}, { new: true });
+      const rightDay = req.body.rightDay
+    const doc = await TrackModel.findOneAndUpdate({  name: req.body.id }, { $set: { [`booked.${rightDay}`]: req.body.h3s}}, { new: true });
     console.log(doc)
   res.send(doc)}
     else{
@@ -74,7 +76,7 @@ app.post("/user", async function(req, res){
 app.post("/cancel", async function(req, res){
       console.log(req.body)
       const doc = await TrackModel.findOne({  name: req.body.nameOfTrack })
-      const bookedTimes = doc.booked
+      const bookedTimes = doc.booked[req.body.rightDay]
       for (let times in bookedTimes){
         if (bookedTimes[times].text.indexOf(req.body.timeline.split(" ")[0]) !== -1) {
           console.log(req.body.timeline.split(" ")[0])
@@ -83,12 +85,17 @@ app.post("/cancel", async function(req, res){
           break
         }
       }
-      await TrackModel.findOneAndUpdate({  name: req.body.nameOfTrack }, { $set: { booked: bookedTimes}}, { new: true });
-      await UserModel.findOneAndUpdate({  user: req.body.id }, { $pull: { booked_tracks: `${req.body.nameOfTrack}: ${req.body.timeline}`}}, { new: true })
+      await TrackModel.findOneAndUpdate({  name: req.body.nameOfTrack }, { $set: { [`booked.${req.body.rightDay}`]: bookedTimes}}, { new: true });
+      await UserModel.findOneAndUpdate({  user: req.body.id }, { $pull: { booked_tracks: `${req.body.nameOfTrack}: ${req.body.rightDay} ${req.body.timeline}`}}, { new: true })
       console.log("hah")
       res.send("success")
 
 
         });
+app.post("/newDay", async function(req, res){
+  const doc = await TrackModel.findOneAndUpdate({  name: req.body.id }, { $set: { [`booked.${req.body.rightDay}`]: req.body.h3s}}, { new: true });
+  console.log(doc)
+  res.send(doc)
+})
 mongoose.connect(process.env.MONGO_URL).then(()=>{console.log("success")})
 app.listen(3000)

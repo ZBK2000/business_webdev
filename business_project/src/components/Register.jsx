@@ -17,10 +17,28 @@ export default function register (props){
             { id: 6, text: "18-20 ", color: "black" },
             { id: 7, text: "20-22 ", color: "black" }
           ]
-        
+          function getNext7Days() {
+            const next7Days = [];
+            const today = new Date();
+            
+            for (let i = 0; i < 7; i++) {
+              const nextDay = new Date(today.getTime());
+              nextDay.setDate(today.getDate() + i);
+              const year = nextDay.getFullYear();
+              const month = nextDay.getMonth() + 1;
+              const day = nextDay.getDate();
+              next7Days.push(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
+            }
+          
+            return next7Days;
+          } 
+        const avalaibleTimesFor7Days = {}
+        const next7Days = getNext7Days()
+        next7Days.forEach(key => {
+            avalaibleTimesFor7Days[key] = avalaibleTimes})
         const registerTrack = async (event) => {
             event.preventDefault();
-            const data = {track: {name, price, location, description, booked: avalaibleTimes}, user:props.getDownData2};
+            const data = {track: {name, price, location, description, booked: avalaibleTimesFor7Days, next7Days}, user:props.getDownData2};
             const response = await fetch(`http://localhost:3000/`, {
                 method: "POST",
                 body: JSON.stringify(data),

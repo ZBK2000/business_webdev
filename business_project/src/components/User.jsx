@@ -13,13 +13,14 @@ export default function User (props){
 
     async function cancel(item){
         const nameOfTrack = item.split(": ")[0]
-        const timeline = item.split(": ")[1]
+        const timeline = item.split(": ")[1].split(" ").slice(1).join(" ")
+        const rightDay = item.split(": ")[1].split(" ")[0]
         
         
         console.log(render,"itt")
         const response = await fetch("http://localhost:3000/cancel",  {
             method: "POST",
-            body: JSON.stringify({nameOfTrack, timeline, id}),
+            body: JSON.stringify({nameOfTrack, timeline, id, rightDay}),
             headers: {
                 "Content-Type": "application/json"
             }

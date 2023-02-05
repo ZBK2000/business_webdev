@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 
-export default  function Next7DaysDropdown() {
+export default  function Next7DaysDropdown(props) {
     function getNext7Days() {
         const next7Days = [];
         const today = new Date();
@@ -11,21 +12,26 @@ export default  function Next7DaysDropdown() {
           const year = nextDay.getFullYear();
           const month = nextDay.getMonth() + 1;
           const day = nextDay.getDate();
-          next7Days.push(`${year}.${month.toString().padStart(2, '0')}.${day.toString().padStart(2, '0')}`);
+          next7Days.push(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
         }
       
         return next7Days;
       } 
-  const [selectedDate, setSelectedDate] = useState("");
-  const next7Days = getNext7Days();
+      const next7Days = getNext7Days();
+  const [selectedDate, setSelectedDate] = useState(0);
+  
  console.log(next7Days, "juu")
   
  const handleChange = (e) => {
     console.log(e.target.value)
     setSelectedDate(e.target.value);
+    console.log(next7Days[selectedDate])
+   
+    console.log(next7Days[selectedDate])
     
   };
-
+  useEffect(()=>{props.getUpData(next7Days[selectedDate])}, [selectedDate])
+    
   return (
     <div>
       <select value={selectedDate} onChange={handleChange}>
