@@ -1,6 +1,7 @@
 import Header from "./Header";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Footer from "./Footer";
 
 export default function MainPage (props){
     const navigate = useNavigate()
@@ -34,6 +35,6 @@ export default function MainPage (props){
     <div className="container">{newTracks}</div>
    
 
-
+       
     </div>)
 }

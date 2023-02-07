@@ -10,6 +10,8 @@ export default function register (props){
         const [location, setLocation] = useState("");
         const [description, setDescription] = useState("");
         //const [slots, setSlots] = useState(4)
+        const [img, setImg] =useState("")
+
         const avalaibleTimes = [
             { id: 1, text: "8-10 ", color: "black" ,slots: ["","","",""]},
             { id: 2, text: "10-12 ", color: "black" ,slots: ["","","",""]},
@@ -42,21 +44,33 @@ export default function register (props){
 
         const registerTrack = async (event) => {
             event.preventDefault();
-            const data = {track: {name, price, location, description, booked: avalaibleTimesFor7Days, next7Days}, user:props.getDownData2};
+           console.log(img)
+           let formData = new FormData()
+           for (let i = 0; i < img.length; i++) {
+            formData.append("img_urls", img[i]);
+           }
+            const data = {track: {name, price, location, description, booked: avalaibleTimesFor7Days, /* next7Days, */ }, user:props.getDownData2};
+
             const response = await fetch(`http://localhost:3000/`, {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
+                    
                     "Content-Type": "application/json"
                 }
             });
             const allTrack = await response.json();
-        
+      
             props.getUpData(allTrack)
             //props.getUpData2(slots)
             navigate("/")
+            formData.append("track", name)
+            const response2 = await fetch(`http://localhost:3000/img`, {
+                method: "POST",
+                body: formData
+            });
         }
-    
+        
         return (
             
             <div>
@@ -71,6 +85,8 @@ export default function register (props){
                 <input type="text" id="location" onChange={(e) => setLocation(e.target.value)} />
                 {/* <label htmlFor="slots">Maximum slots:</label>
                 <input type="number" step="1" id="slots" onChange={(e) => setSlots(e.target.value)} /> */}
+                <label htmlFor="img">Image:</label>
+                <input type="file" id="img" multiple onChange={(e) => setImg(e.target.files)} />
                 <label htmlFor="desc">Description:</label>
                 <textarea  id="desc" onChange={(e) => setDescription(e.target.value)} />
                 <button>Submit</button>

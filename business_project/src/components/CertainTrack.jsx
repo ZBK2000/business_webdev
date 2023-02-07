@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Next7DaysDropdown from "./nextSevenDay";
 import AvailablePlaces from "./avalaiblePlaces";
+import Footer from "./Footer";
 
 export default function CertainTrack (props){
   const today = new Date();
@@ -26,6 +27,7 @@ export default function CertainTrack (props){
  // const [track, setTrack] = useState("")
    const [lastClickedId, setLastClickedId] = useState(null);
    const [errorhandler, setErrorHandler] = useState("")
+   /* const [img, setImg] = useState("") */
 const handleClick = async (id) => {
     setH3s(h3s.map((h3) => {
       if (h3.id === id) {
@@ -140,12 +142,37 @@ useEffect(()=>{
     console.log(error)
    } 
     
+   /*  useEffect(()=>{
+      async function fethcing2(){
+        const response = await fetch(`http://localhost:3000/img`)
+      const img = await response.blob()
+    console.log(img)
+    setImg(img)}
+      fethcing2()
+    },[]) */
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.images');
     
-
+    function changeSlide() {
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+    
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].style.display = "block";
+    }
+    
+    //setInterval(changeSlide, 5000);
     return (<div>
         <Header title={id}  success={props.getDownData} name={props.getDownData2}/>
-        
-         {errorhandler ?<h1>Please log in to see the page of this track</h1>: <div><h1>{desc}</h1>
+       
+         {errorhandler ?<h1>Please log in to see the page of this track</h1>: <div>
+          <div className="images-and-descr">
+          <div className="slider">
+          <img onClick={changeSlide} src={`http://localhost:3000/img?user_id=${id}&number=0`} className="images slide" alt="image" />
+          <img onClick={changeSlide}src={`http://localhost:3000/img?user_id=${id}&number=1`} className="images slide" alt="image" />
+          <img onClick={changeSlide}src={`http://localhost:3000/img?user_id=${id}&number=2`} className="images slide" alt="image" />
+          </div> <div className="desc-and-rating"><h1>{desc}</h1> <h2>Rating 4,5<span>thewebpage@ofthissite.com</span></h2></div></div>
          <Next7DaysDropdown getUpData={setRightDay}/> 
         <div className="booking-timelines">
         {h3s.map((h3) => (<div  className="timeline-div">
@@ -160,7 +187,9 @@ useEffect(()=>{
           <li className="slots-list-element">{slot}</li>
         ))}</div>
       ))}
-        </div></div> }
+        </div>
+        
+        <Footer/></div> }
        
     </div>)
 }

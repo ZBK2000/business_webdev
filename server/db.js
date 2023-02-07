@@ -8,7 +8,8 @@ const TrackSchema  = new Schema({
   price: String,
   location : String,
   description: String,
-  booked: Object
+  booked: Object,
+  img_urls: Array
  
 });
 

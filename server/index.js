@@ -4,11 +4,42 @@ import { config } from "dotenv";
 import TrackModel from "./db.js";
 import cors from "cors"
 import UserModel from "./usersdb.js";
+import multer from "multer";
+import path from "path"
 config()
 const app = express()
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(cors())
-app.post("/", async function(req, res){
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'public/images');
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage })
+app.post("/img", upload.array("img_urls") ,async function(req, res){
+  console.log(Date.now())
+  console.log(req.body.track)
+  console.log(req.body)
+  console.log(req.files)
+  const existingTrack = await TrackModel.findOneAndUpdate({  name: req.body.track }, { $set: { img_urls: req.files}}, { new: true });
+  existingTrack
+
+
+  
+})
+app.get("/img", async function(req, res){
+  console.log(req.query)
+  const track = await TrackModel.findOne({name: req.query.user_id});
+  res.sendFile(path.join(process.cwd(), "public", "images", track.img_urls[req.query.number].filename));
+})
+app.post("/" ,async function(req, res){
+  console.log(req.body)
+ 
     const newTrack = new TrackModel(req.body.track)
     await newTrack.save()
     const allTrack = await TrackModel.find()
