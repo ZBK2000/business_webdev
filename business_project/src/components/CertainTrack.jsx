@@ -93,16 +93,21 @@ useEffect(() => {
     let desc 
     let nameOfTrack
     let trackNumber
+    let img_number
+    let slot_number
    try {
     for (let track in props.allTrack){
     console.log(track)
     if (props.allTrack[track].name == id){
         desc = props.allTrack[track].description
         nameOfTrack = props.allTrack[track].name
+        img_number = props.allTrack[track].img_urls.length
+        slot_number = props.allTrack[track].slot_number
         trackNumber = track
         break
     }
 }
+ const new_slots = Array(parseInt(slot_number)).fill("")
 
 
 console.log(desc, nameOfTrack, trackNumber,props.allTrack[trackNumber], props.allTrack)
@@ -115,13 +120,13 @@ useEffect(()=>{
       fetch(`http://localhost:3000/newDay`, {
         method: "POST",
         body: JSON.stringify({id: nameOfTrack, rightDay: rightDay, h3s: [
-          { id: 1, text: "8-10 ", color: "black" ,slots: ["","","",""]},
-          { id: 2, text: "10-12 ", color: "black" ,slots:["","","",""]},
-          { id: 3, text: "12-14 ", color: "black" ,slots: ["","","",""]},
-          { id: 4, text: "14-16 ", color: "black" ,slots:["","","",""]},
-          { id: 5, text: "16-18 ", color: "black" ,slots:["","","",""]},
-          { id: 6, text: "18-20 ", color: "black" ,slots: ["","","",""]},
-          { id: 7, text: "20-22 ", color: "black" ,slots: ["","","",""]}
+          { id: 1, text: "8-10 ", color: "black" ,slots: [...new_slots]},
+          { id: 2, text: "10-12 ", color: "black" ,slots:[...new_slots]},
+          { id: 3, text: "12-14 ", color: "black" ,slots: [...new_slots]},
+          { id: 4, text: "14-16 ", color: "black" ,slots:[...new_slots]},
+          { id: 5, text: "16-18 ", color: "black" ,slots:[...new_slots]},
+          { id: 6, text: "18-20 ", color: "black" ,slots: [...new_slots]},
+          { id: 7, text: "20-22 ", color: "black" ,slots: [...new_slots]}
         ]}),
         headers: {
             "Content-Type": "application/json"}
@@ -169,9 +174,20 @@ useEffect(()=>{
          {errorhandler ?<h1>Please log in to see the page of this track</h1>: <div>
           <div className="images-and-descr">
           <div className="slider">
-          <img onClick={changeSlide} src={`http://localhost:3000/img?user_id=${id}&number=0`} className="images slide" alt="image" />
+          { 
+  Array.from({length: img_number}, (_, i) => (
+    <img 
+      key={i} 
+      onClick={changeSlide} 
+      src={`http://localhost:3000/img?user_id=${id}&number=${i}`} 
+      className="images slide" 
+      alt="image" 
+    />
+  ))
+}
+       {/*    <img onClick={changeSlide} src={`http://localhost:3000/img?user_id=${id}&number=0`} className="images slide" alt="image" />
           <img onClick={changeSlide}src={`http://localhost:3000/img?user_id=${id}&number=1`} className="images slide" alt="image" />
-          <img onClick={changeSlide}src={`http://localhost:3000/img?user_id=${id}&number=2`} className="images slide" alt="image" />
+          <img onClick={changeSlide}src={`http://localhost:3000/img?user_id=${id}&number=2`} className="images slide" alt="image" /> */}
           </div> <div className="desc-and-rating"><h1>{desc}</h1> <h2>Rating 4,5<span>thewebpage@ofthissite.com</span></h2></div></div>
          <Next7DaysDropdown getUpData={setRightDay}/> 
         <div className="booking-timelines">

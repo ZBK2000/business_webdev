@@ -18,7 +18,7 @@ function App() {
   const [success, setSuccess] = useState("s")
   const [name, setName] = useState("")
   const [change, setChange] = useState("")
- // const [slots, setSlots] = useState(4)
+  const [slots, setSlots] = useState(4)
   console.log(tracks, success)
   
  
@@ -52,7 +52,7 @@ function App() {
     <Routes>
     <Route path='/' element={<MainPage allTrack={tracks} getDownData={success} getDownData2={name}/>}/>  
     <Route path='/track' element={<Track getDownData={success} getDownData2={name}/>}/>
-    <Route path='/register' element={<Register getUpData={setTracks} /* getUpData2={setSlots} */ getDownData={success} getDownData2={name}/>}/>
+    <Route path='/register' element={<Register getUpData={setTracks}  getUpData2={setSlots}  getDownData={success} getDownData2={name}/>}/>
     <Route path='/tracks/:id' element={<CertainTrack allTrack={tracks} getDownData={success} getDownData2={name} /* getDownData3={slots}  */getUpData={setChange}/>}/>
     <Route path='/signup' element={<UserRegister />}/> 
     <Route path='/login' element={<Login getUpData={setSuccess} getUpData2={setName}/>}/>

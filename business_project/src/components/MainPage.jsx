@@ -22,7 +22,7 @@ export default function MainPage (props){
         return (
             <div className="tracks" onClick={() => reNavigate(item)} key={item.name}>
            {/*  {props.getDownData=="Successfully logged in!"?<Link className="links" to={`/tracks/${item.name}`}><h3>{item.name}</h3></Link>:<Link className="links" to={`/login`}><h3>{item.name}</h3></Link>} */}
-           <h3>{item.name} (4P)</h3>
+           <h3>{item.name} {item.slot_number}P</h3>
             <h3>{item.price}</h3>
             <h3>{item.location}</h3>
             </div> 
