@@ -4,6 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import Next7DaysDropdown from "./nextSevenDay";
 import AvailablePlaces from "./avalaiblePlaces";
 import Footer from "./Footer";
+import Paper from '@mui/material/Paper';
+import Collapse from '@mui/material/Collapse';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { styled } from '@mui/material/styles';
+import { IconButton } from "@mui/material";
 
 export default function CertainTrack (props){
   const today = new Date();
@@ -27,6 +32,7 @@ export default function CertainTrack (props){
  // const [track, setTrack] = useState("")
    const [lastClickedId, setLastClickedId] = useState(null);
    const [errorhandler, setErrorHandler] = useState("")
+   const [expanded, setExpanded] = useState("");
    /* const [img, setImg] = useState("") */
 const handleClick = async (id) => {
     setH3s(h3s.map((h3) => {
@@ -168,6 +174,27 @@ useEffect(()=>{
     }
     
     //setInterval(changeSlide, 5000);
+
+    const ExpandMore = styled((props) => {
+      const { expand, ...other } = props;
+      return <IconButton {...other} />;
+    })(({ theme, expand }) => ({
+      transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
+    }));
+    
+
+    const handleExpandClick = (id) => {
+      if (id == expanded){setExpanded("");}
+      
+   else {
+      setExpanded(id)
+    }}
+    
+
     return (<div>
         <Header title={id}  success={props.getDownData} name={props.getDownData2}/>
        
@@ -191,7 +218,7 @@ useEffect(()=>{
           </div> <div className="desc-and-rating"><h1>{desc}</h1> <h2>Rating 4,5<span>thewebpage@ofthissite.com</span></h2></div></div>
          <Next7DaysDropdown getUpData={setRightDay}/> 
         <div className="booking-timelines">
-        {h3s.map((h3) => (<div  className="timeline-div">
+        {h3s.map((h3) => (<Paper sx={{  backgroundColor: "#7B8FA1"}}elevation={3} className="timeline-div">
         <h3 className="timeline"
         key={h3.id}
           style={{ color: h3.color }}
@@ -199,13 +226,23 @@ useEffect(()=>{
         >
          {h3.text } 
         </h3>
+          <ExpandMore
+          expand={expanded==h3.id? true: false}
+          onClick={() => handleExpandClick(h3.id)}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+        <Collapse in={expanded==h3.id? true: false} timeout="auto">
         {h3.slots.map((slot) =>(
           <li className="slots-list-element">{slot}</li>
-        ))}</div>
+          
+        ))}</Collapse></Paper>
       ))}
         </div>
         
-        <Footer/></div> }
+        </div> }
        
     </div>)
 }

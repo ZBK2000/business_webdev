@@ -58,9 +58,17 @@ export default function register (props){
            console.log(img)
            let formData = new FormData()
            for (let i = 0; i < img.length; i++) {
+            console.log(img[i])
             formData.append("img_urls", img[i]);
            }
             const data = {track: {name, price, location, description, slot_number: slots, booked: avalaibleTimesFor7Days, /* next7Days, */ }, user:props.getDownData2};
+          /*   formData.append("track[name]", data.track.name);
+            formData.append("track[price]", data.track.price);
+            formData.append("track[location]", data.track.location);
+            formData.append("track[description]", data.track.description);
+            formData.append("track[slots]", data.track.slot_number);
+            formData.append("track[booked]", data.track.booked);
+            formData.append("user", data.user); */
 
             const response = await fetch(`http://localhost:3000/`, {
                 method: "POST",
@@ -74,12 +82,14 @@ export default function register (props){
       
             props.getUpData(allTrack)
             props.getUpData2(slots)
-            navigate("/")
+            
             formData.append("track", name)
-            const response2 = await fetch(`http://localhost:3000/img`, {
+            const res = await fetch(`http://localhost:3000/img`, {
                 method: "POST",
                 body: formData
-            });
+            })
+            const answer = await res.text()
+            if (answer=="success"){navigate("/")}
         }
         
         return (

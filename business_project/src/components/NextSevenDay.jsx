@@ -43,5 +43,18 @@ export default  function Next7DaysDropdown(props) {
       </select>
       
     </div>
+      /*   <Box sx={{ minWidth: 120 ,}}>
+      
+        
+        <Select
+           labelId="demo-simple-select-label" id="demo-simple-select" label="Date" value={selectedDate} onChange={handleChange}>
+        {next7Days.map((date, index) => (
+          <MenuItem key={date} value={index}>
+            {date}
+          </MenuItem>
+        ))}
+      </Select>
+     
+    </Box> */
   );
 }

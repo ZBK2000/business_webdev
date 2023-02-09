@@ -9,6 +9,7 @@ import UserRegister from './components/UserRegister'
 import Login from './components/Login'
 import Header from './components/Header'
 import User from './components/User'
+import Footer from './components/Footer'
 
 
 
@@ -46,7 +47,8 @@ function App() {
         </div> 
     )}) */
   return (
-    <div>
+    <div >
+    <div className='App'>
       {/* <Header title="Awesome" success={success} name={success}/> */}
      {/*   <div className="container">{newTracks}</div> */}
     <Routes>
@@ -59,6 +61,10 @@ function App() {
     <Route path='/user' element={<User getDownData={success} getDownData2={name}/>}/>
 
     </Routes>
+    </div>
+    <div className='foot'>
+    <Footer/>
+    </div>
      </div>
       
     

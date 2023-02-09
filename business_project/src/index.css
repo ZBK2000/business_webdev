@@ -1,3 +1,11 @@
-#root{
+html, body, #root{
   background-color: #567189;
-}
+ 
+    width: 100%;
+    min-height: 100%
+    
+  }
+  #root {
+    display: flex;
+    flex-direction: column;
+   }

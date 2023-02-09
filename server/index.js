@@ -27,7 +27,7 @@ app.post("/img", upload.array("img_urls") ,async function(req, res){
   console.log(req.body)
   console.log(req.files)
   const existingTrack = await TrackModel.findOneAndUpdate({  name: req.body.track }, { $set: { img_urls: req.files}}, { new: true });
-  existingTrack
+  res.send("success")
 
 
   
