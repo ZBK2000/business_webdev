@@ -21,7 +21,7 @@ function App() {
   const [change, setChange] = useState("")
   const [slots, setSlots] = useState(4)
   console.log(tracks, success)
-  
+  console.log(change)
  
   
   useEffect(() => {
@@ -57,8 +57,8 @@ function App() {
     <Route path='/register' element={<Register getUpData={setTracks}  getUpData2={setSlots}  getDownData={success} getDownData2={name}/>}/>
     <Route path='/tracks/:id' element={<CertainTrack allTrack={tracks} getDownData={success} getDownData2={name} /* getDownData3={slots}  */getUpData={setChange}/>}/>
     <Route path='/signup' element={<UserRegister />}/> 
-    <Route path='/login' element={<Login getUpData={setSuccess} getUpData2={setName}/>}/>
-    <Route path='/user' element={<User getDownData={success} getDownData2={name}/>}/>
+    <Route path='/login/:name' element={<Login getUpData={setSuccess} getUpData2={setName}/>}/>
+    <Route path='/user' element={<User getDownData={success} getDownData2={name} getUpData={setChange}/>}/>
 
     </Routes>
     </div>

@@ -27,7 +27,8 @@ app.post("/img", upload.array("img_urls") ,async function(req, res){
   console.log(req.body)
   console.log(req.files)
   const existingTrack = await TrackModel.findOneAndUpdate({  name: req.body.track }, { $set: { img_urls: req.files}}, { new: true });
-  res.send("success")
+  const allTrack = await TrackModel.find()
+  res.send(allTrack)
 
 
   
@@ -138,6 +139,27 @@ app.post("/newDay", async function(req, res){
   const doc = await TrackModel.findOneAndUpdate({  name: req.body.id }, { $set: { [`booked.${req.body.rightDay}`]: req.body.h3s}}, { new: true });
   console.log(doc)
   res.send(doc)
+})
+
+app.post("/delete", async function(req, res){
+  const id = req.body.id;
+  const track = req.body.track;
+  console.log(id, track, "..")
+  await TrackModel.findOneAndDelete({  name: track })
+  
+
+  // search for the user based on their ID
+  const users = await UserModel.find({});
+
+  for (const user of users) {
+    // retrieve the user's booked array and filter out any instances that contain the given track as a substring
+    const filteredBooked = user.booked_tracks.filter(item => !item.includes(track));
+    const filteredtracks = user.tracks.filter(item => !item.includes(track));
+
+    // update the user's booked array in the database
+    await UserModel.updateOne({ user: user.user }, { booked_tracks: filteredBooked, tracks: filteredtracks });
+  }
+  res.send("deleted")
 })
 mongoose.connect(process.env.MONGO_URL).then(()=>{console.log("success")})
 app.listen(3000)

@@ -113,14 +113,25 @@ button {
 .success{
   text-align: center;
 }
+.booked-times{
+  display: flex;
+  width: 50%;
+  margin: 10px;
+  background-color: #00425A !important ;
+}
+.booked-times-h2{
+  margin-right: auto;
+}
 .booked-times:hover{
-  color: red;
+
   cursor: pointer;
 }
 .timeline{
   cursor: pointer;
 }
-
+.cancel-see{
+  color:#7B8FA1 !important
+}
 
 
 .timeline-div{

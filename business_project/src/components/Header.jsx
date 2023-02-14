@@ -7,7 +7,7 @@ export default function Header (props){
     return (<div className="header">
         <h1>{props.title}</h1>
        
-        {props.success=="Successfully logged in!" ?"": <Link className="links" to="/login"><h2>Login</h2></Link> }
+        {props.success=="Successfully logged in!" ?"": <Link className="links" to="/login/home"><h2>Login</h2></Link> }
         {props.success=="Successfully logged in!" ?"":<Link className="links" to="/signup"><h2>Sign up</h2></Link>   }
         
         {props.success=="Successfully logged in!" ?<Link className="links" to="/register"><h2>Register new track</h2></Link>: "" }

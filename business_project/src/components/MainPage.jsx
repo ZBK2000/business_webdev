@@ -23,7 +23,7 @@ export default function MainPage (props){
             navigate(`/tracks/${item.name}`)
         }
         else{
-            navigate(`/login`)
+            navigate(`/login/${item.name}`)
         }
          
          

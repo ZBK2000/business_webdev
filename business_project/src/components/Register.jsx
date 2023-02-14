@@ -78,18 +78,20 @@ export default function register (props){
                     "Content-Type": "application/json"
                 }
             });
-            const allTrack = await response.json();
+           // const allTrack = await response.json();
       
-            props.getUpData(allTrack)
-            props.getUpData2(slots)
+            
             
             formData.append("track", name)
             const res = await fetch(`http://localhost:3000/img`, {
                 method: "POST",
                 body: formData
             })
-            const answer = await res.text()
-            if (answer=="success"){navigate("/")}
+            const allTrack = await res.json()
+            if (allTrack){
+              props.getUpData(allTrack)
+            props.getUpData2(slots)
+            navigate("/")}
         }
         
         return (

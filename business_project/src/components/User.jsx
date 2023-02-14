@@ -1,10 +1,12 @@
 
+import { Button, Paper } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Header from "./Header";
 
 export default function User (props){
+    const navigate = useNavigate()
 
     const id = props.getDownData2
     const [userData, setUserData] = useState(null);
@@ -25,9 +27,30 @@ export default function User (props){
                 "Content-Type": "application/json"
             }
         })
-        
+        props.getUpData(item)
         console.log(render, "?")
         setRender(item)
+    }
+
+    function see (item){
+       console.log(item)
+       navigate(`/tracks/${item.split(":")[0]}`)
+    }
+    async function deleteTrack(item){
+        const dataToDelete = {id, track:item.split(":")[0]}
+        console.log(dataToDelete)
+        const response = await fetch("http://localhost:3000/delete",  {
+            method: "POST",
+            body: JSON.stringify(dataToDelete),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const deleted = await response.text()
+        if (deleted == "deleted"){
+        props.getUpData([item, "deleted"])
+        console.log(render, "?")
+        setRender([item, "deleted"])}
     }
     console.log(render, "nyii")
     useEffect(()=>{    async function fetching_user(){
@@ -41,15 +64,16 @@ export default function User (props){
     const data= await response.json()
     console.log(data, "huhu")
         setUserData({booked_tracks: data.booked_tracks.map(function(item){
-         return(<h2 className="booked-times" onClick={()=>cancel( item)}><li>{item}</li></h2>)
+         return(<Paper className="booked-times" elevation={6}><h2  className="booked-times-h2" ><li>{item}</li></h2><Button className="cancel-see" onClick={()=>cancel( item)} variant="text">X</Button><Button  onClick={()=>see( item)} className="cancel-see" variant="text">See</Button></Paper>)
         }), tracks:data.tracks.map(function(item){
-            return(<h2 className="createdTracks"><li>{item}</li></h2>)
+            return(<Paper className="booked-times" elevation={6}><h2 className="booked-times-h2"><li>{item}</li></h2><Button className="cancel-see"  onClick={()=>deleteTrack( item)}   variant="text">X</Button><Button onClick={()=>see( item)} className="cancel-see" variant="text">See</Button></Paper>)
            })} )}
         fetching_user()}, [render])
+    
 
     console.log(props.success, userData)
 
-
+    
     return ( <div > <Header title="account info" success={props.getDownData} name={props.getDownData2}></Header>
         <div className="userData">
         {userData ? (

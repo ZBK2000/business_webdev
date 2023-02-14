@@ -17,7 +17,7 @@ export default function CertainTrack(props) {
   const year = nextDay.getFullYear();
   const month = nextDay.getMonth() + 1;
   const day = nextDay.getDate();
-  const today_time = `${year}-${month.toString().padStart(2, "0")}-${day 
+  const today_time = `${year}-${month.toString().padStart(2, "0")}-${day
     .toString()
     .padStart(2, "0")}`;
   const [rightDay, setRightDay] = useState(today_time);
@@ -37,11 +37,10 @@ export default function CertainTrack(props) {
   const [expanded, setExpanded] = useState("");
   /* const [img, setImg] = useState("") */
   const handleClick = async (id) => {
-      let ifNotSameName = true
-      const newh3s = h3s.map((h3) => {
+    setH3s(
+      h3s.map((h3) => {
         if (h3.id === id) {
           if (h3.slots.includes(props.getDownData2)) {
-            ifNotSameName = false
             return h3;
           }
           let place = h3.slots;
@@ -65,34 +64,11 @@ export default function CertainTrack(props) {
         }
         return h3;
       })
-    
-      if (ifNotSameName){
-        const data = {
-          rightDay: rightDay,
-          h3s: newh3s,
-          id: nameOfTrack,
-          user: props.getDownData2,
-          time_id: id,
-        };
-        console.log(data, "hanyszor");
-        const response = await fetch(`http://localhost:3000/tracks`, {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const trackData = await response.json();
-        try {
-          setH3s(trackData.booked[rightDay]);
-          props.getUpData(newh3s);
-        } catch (error) {
-          console.log(error);
-        }
-      }
+    );
+
     console.log(id);
   };
-/* 
+
   useEffect(() => {
     async function fethcing() {
       console.log(lastClickedId);
@@ -124,7 +100,7 @@ export default function CertainTrack(props) {
 
     props.getUpData(h3s);
     console.log("itt?", h3s);
-  }, [lastClickedId]); */
+  }, [lastClickedId]);
   const { id } = useParams();
 
   console.log(id, h3s);
@@ -217,13 +193,12 @@ export default function CertainTrack(props) {
         } else {
           setH3s(props.allTrack[trackNumber].booked[rightDay]);
           console.log(props.allTrack[trackNumber].booked[rightDay], h3s);
-          
         }
       } catch (error) {
         setErrorHandler("x");
         console.log(error);
       }
-    }, [rightDay,  props.allTrack[trackNumber].booked[rightDay] ]);
+    }, [rightDay, props.allTrack[trackNumber].booked[rightDay]]);
   } catch (error) {
     console.log(error);
   }
