@@ -27,11 +27,12 @@ export default function Login(props) {
     props.getUpData(accepted);
     if (accepted == "Successfully logged in!") {
       props.getUpData2(user);
+      if (name !="home"){
+        navigate(`/tracks/${name}`)
+      }
     }
     console.log(registrateds);
-    if (name !="home"){
-      navigate(`/tracks/${name}`)
-    }
+  
   };
 
   return (
@@ -41,7 +42,7 @@ export default function Login(props) {
         success={registrateds}
         name={user}
       />
-      {registrateds == "" ? (  <div>{name!="home" ? <h1>Please log in to see the page of that track!</h1>:""}
+      {registrateds != "Successfully logged in!" ? (  <div>{name!="home" ? <h1>Please log in to see the page of that track!</h1>:""}
         <form onSubmit={createDeck}>
           <div>
             <label htmlFor="names">Name:</label>

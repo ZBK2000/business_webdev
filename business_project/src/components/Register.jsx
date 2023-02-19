@@ -103,7 +103,7 @@ export default function register (props){
                 <label htmlFor="name">Name:</label>
                 <input type="text" id="name" onChange={(e) => setName(e.target.value)} />
                 <label htmlFor="price">Price:</label>
-                <input type="text" id="price" onChange={(e) => setPrice(e.target.value)} />
+                <input type="number" id="price" onChange={(e) => setPrice(e.target.value)} />
                 <label htmlFor="location">Location:</label>
                 <input type="text" id="location" onChange={(e) => setLocation(e.target.value)} />
                  <label htmlFor="slots">Maximum slots:</label>
