@@ -1,5 +1,5 @@
 
-import { Button, Paper } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -78,14 +78,14 @@ export default function User (props){
         <div className="userData">
         {userData ? (
           <>
-          <h1 className="userTrackInfo-1">your tracks:</h1>
+          <Typography variant="h5" className="userTrackInfo-1">your tracks:</Typography>
             {userData.tracks}
-            <h1 className="userTrackInfo-2">booked tracks:</h1>
+            <Typography variant="h5" className="userTrackInfo-2">booked tracks:</Typography>
             {userData.booked_tracks}
             <div></div>
           </>
         ) : (
-          <div><h1>Please log in to see user information</h1></div>
+          <div><Typography>Please log in to see user information</Typography></div>
         )}
       </div>
     

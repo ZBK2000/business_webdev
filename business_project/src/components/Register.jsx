@@ -2,6 +2,8 @@ import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import AvailablePlaces from "./avalaiblePlaces";
+import { TextField } from "@mui/material";
+
 
 export default function register (props){
         const navigate = useNavigate()
@@ -102,6 +104,7 @@ export default function register (props){
             <form onSubmit={registerTrack}>
                 <label htmlFor="name">Name:</label>
                 <input type="text" id="name" onChange={(e) => setName(e.target.value)} />
+                {/* <TextField id="outlined-basic" sx={{color: "#3c3c3c" , "& .input:focus !important":   {color:"#3c3c3c"}}} label="Location"  variant="standard">Name</TextField> */}
                 <label htmlFor="price">Price:</label>
                 <input type="number" id="price" onChange={(e) => setPrice(e.target.value)} />
                 <label htmlFor="location">Location:</label>

@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { useState } from "react";
 import Header from "./Header";
 
@@ -24,12 +25,12 @@ export default function UserRegister (){
         <Header title="Create your account" />
         {registrated=="" ?
         <form onSubmit={createDecks}>
-             <div><label htmlFor="name">Name:</label>
+             <div><label htmlFor="name"><Typography>Name:</Typography> </label>
                 <input type="text" id="name" onChange={(e) => setUser(e.target.value)} />
-                <label htmlFor="price">Password:</label>
+                <label htmlFor="price"><Typography>Password:</Typography> </label>
                 <input type="text" id="price" onChange={(e) => setPassword(e.target.value)} />
-                <button>Submit</button></div>
+                <button><Typography>Submit</Typography> </button></div>
             </form> : ""}
-            <h1 className="success">{registrated}</h1>
+            <Typography sx={{marginTop:"15px"}} variant="h5" className="success">{registrated}</Typography>
     </div>)
 }

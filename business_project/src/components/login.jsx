@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "./Footer";
@@ -42,36 +43,36 @@ export default function Login(props) {
         success={registrateds}
         name={user}
       />
-      {registrateds != "Successfully logged in!" ? (  <div>{name!="home" ? <h1>Please log in to see the page of that track!</h1>:""}
+      {registrateds != "Successfully logged in!" ? (  <div>{name!="home" ? <Typography>Please log in to see the page of that track!</Typography>:""}
         <form onSubmit={createDeck}>
           <div>
-            <label htmlFor="names">Name:</label>
+            <label htmlFor="names"><Typography>Name:</Typography> </label>
             <input
               type="text"
               id="names"
               onChange={(e) => setUser(e.target.value)}
             />
-            <label htmlFor="prices">Password:</label>
+            <label htmlFor="prices"><Typography>Password:</Typography> </label>
             <input
               type="text"
               id="prices"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button>Submit</button>
+            <button><Typography>Submit</Typography> </button>
           </div>
         </form></div>
       ) : (
         ""
       )}
       {registrateds == "Successfully logged in!" ? (
-        <h1 className="success">Welcome {user}</h1>
+        <Typography sx={{marginTop:"15px"}} variant="h5" className="success">Welcome {user}</Typography>
       ) : (
         ""
       )}
 
-      <h1 className="success">{registrateds}</h1>
+      <Typography variant="h5" className="success">{registrateds}</Typography>
       {registrateds == "something went wrong" ? (
-        <h1 className="success">Please try again</h1>
+        <Typography variant="h5" className="success">Please try again</Typography>
       ) : (
         ""
       )}

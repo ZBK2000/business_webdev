@@ -1,3 +1,4 @@
+import { Box, MenuItem, Select } from "@mui/material";
 import React, { useState } from "react";
 import { useEffect } from "react";
 
@@ -33,7 +34,7 @@ export default  function Next7DaysDropdown(props) {
   useEffect(()=>{props.getUpData(next7Days[selectedDate])}, [selectedDate])
     
   return (
-    <div>
+/*     <div>
       <select value={selectedDate} onChange={handleChange}>
         {next7Days.map((date, index) => (
           <option key={date} value={index}>
@@ -42,11 +43,11 @@ export default  function Next7DaysDropdown(props) {
         ))}
       </select>
       
-    </div>
-      /*   <Box sx={{ minWidth: 120 ,}}>
+    </div> */
+        <Box sx={{ minWidth: 120 }}>
       
         
-        <Select
+        <Select sx={{border:"none"}}
            labelId="demo-simple-select-label" id="demo-simple-select" label="Date" value={selectedDate} onChange={handleChange}>
         {next7Days.map((date, index) => (
           <MenuItem key={date} value={index}>
@@ -55,6 +56,6 @@ export default  function Next7DaysDropdown(props) {
         ))}
       </Select>
      
-    </Box> */
+    </Box> 
   );
 }

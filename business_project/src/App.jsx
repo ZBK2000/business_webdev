@@ -10,6 +10,7 @@ import Login from './components/Login'
 import Header from './components/Header'
 import User from './components/User'
 import Footer from './components/Footer'
+import ButtonAppBar from './components/NewLogin'
 
 
 
@@ -59,12 +60,13 @@ function App() {
     <Route path='/signup' element={<UserRegister />}/> 
     <Route path='/login/:name' element={<Login getUpData={setSuccess} getUpData2={setName}/>}/>
     <Route path='/user' element={<User getDownData={success} getDownData2={name} getUpData={setChange}/>}/>
+    <Route path='/test' element={<ButtonAppBar/>}/>
 
     </Routes>
     </div>
-    <div className='foot'>
+    {/* <div className='foot'>
     <Footer/>
-    </div>
+    </div> */}
      </div>
       
     

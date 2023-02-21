@@ -14,8 +14,9 @@ import { grey } from "@mui/material/colors";
 import { height } from "@mui/system";
 import Filter from "./Filter";
 import { useEffect } from "react";
-
+import { useTheme } from "@emotion/react";
 export default function MainPage (props){
+  const theme = useTheme()
     const navigate = useNavigate()
     const [id, setId] = useState("")
     const [filterItems, setFilterItems] = useState("")
@@ -63,7 +64,7 @@ console.log(filteredData)
      const newTracks = filteredData.map(function(item){
         console.log(item.name)
         return (
-                <Card className="tracks" sx={{ maxWidth: 345, backgroundColor: "#7B8FA1"}} onClick={() => reNavigate(item)} key={item.name}>
+                <Card className="tracks" sx={{ maxWidth: 345, backgroundColor: theme.palette.secondary.main}} onClick={() => reNavigate(item)} key={item.name}>
                   <CardMedia component="img"
                     sx={{ height: 140 }}
                     

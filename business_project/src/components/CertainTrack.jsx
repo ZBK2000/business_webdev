@@ -8,7 +8,8 @@ import Paper from "@mui/material/Paper";
 import Collapse from "@mui/material/Collapse";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
 export default function CertainTrack(props) {
   const today = new Date();
@@ -285,6 +286,7 @@ export default function CertainTrack(props) {
             <div className="slider">
               {Array.from({ length: img_number }, (_, i) => (
                 <img
+                  
                   key={i}
                   onClick={changeSlide}
                   src={`http://localhost:3000/img?user_id=${id}&number=${i}`}
@@ -297,17 +299,26 @@ export default function CertainTrack(props) {
           <img onClick={changeSlide}src={`http://localhost:3000/img?user_id=${id}&number=2`} className="images slide" alt="image" /> */}
             </div>{" "}
             <div className="desc-and-rating">
-              <h1>{desc}</h1>{" "}
-              <h2>
-                Rating 4,5<span>thewebpage@ofthissite.com</span>
-              </h2>
+              <Typography variant="h5" sx={{margin:"10px", marginTop:"25px"}}>{desc}</Typography>{" "}
+              <Box>
+              <hr />
+              <Box sx={{display: "flex", justifyContent:"space-between", alignItems:"center"}}>
+              <Next7DaysDropdown getUpData={setRightDay} />
+              <Typography variant="h6" sx={{margin:"10px"}}>
+                Rating 4,5
+              </Typography>
+              <Typography variant="h6" sx={{margin:"10px"}}>
+                thewebpage@ofthissite.com
+              </Typography>
+              
+              </Box>
+              </Box>
             </div>
           </div>
-          <Next7DaysDropdown getUpData={setRightDay} />
+          
           <div className="booking-timelines">
             {h3s.map((h3) => (
               <Paper
-                sx={{ backgroundColor: "#7B8FA1" }}
                 elevation={3}
                 className="timeline-div"
               >
