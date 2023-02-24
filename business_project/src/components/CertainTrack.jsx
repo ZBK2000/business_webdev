@@ -8,8 +8,11 @@ import Paper from "@mui/material/Paper";
 import Collapse from "@mui/material/Collapse";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
-import { IconButton, Typography } from "@mui/material";
+import { Fab, Grid, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { UserAuth } from "../context/AuthContext";
+import SimpleMap from "./GoogleMap";
+import AddIcon from '@mui/icons-material/Add';
 
 export default function CertainTrack(props) {
   const today = new Date();
@@ -18,6 +21,8 @@ export default function CertainTrack(props) {
   const year = nextDay.getFullYear();
   const month = nextDay.getMonth() + 1;
   const day = nextDay.getDate();
+  const {user} = UserAuth()
+  const nameOfUser = user ? user.displayName: ""
   const today_time = `${year}-${month.toString().padStart(2, "0")}-${day 
     .toString()
     .padStart(2, "0")}`;
@@ -41,7 +46,7 @@ export default function CertainTrack(props) {
       let ifNotSameName = true
       const newh3s = h3s.map((h3) => {
         if (h3.id === id) {
-          if (h3.slots.includes(props.getDownData2)) {
+          if (h3.slots.includes(nameOfUser)) {
             ifNotSameName = false
             return h3;
           }
@@ -49,7 +54,7 @@ export default function CertainTrack(props) {
           let last;
           for (let slot in h3.slots) {
             if (h3.slots[slot] == "") {
-              place[slot] = props.getDownData2;
+              place[slot] = nameOfUser;
               if (slot == h3.slots.length - 1) {
                 last = true;
               }
@@ -72,7 +77,7 @@ export default function CertainTrack(props) {
           rightDay: rightDay,
           h3s: newh3s,
           id: nameOfTrack,
-          user: props.getDownData2,
+          user: nameOfUser,
           time_id: id,
         };
         console.log(data, "hanyszor");
@@ -263,6 +268,7 @@ export default function CertainTrack(props) {
   }));
 
   const handleExpandClick = (id) => {
+    
     if (id == expanded) {
       setExpanded("");
     } else {
@@ -275,15 +281,15 @@ export default function CertainTrack(props) {
       <Header
         title={id}
         success={props.getDownData}
-        name={props.getDownData2}
+        name={nameOfUser}
       />
 
       {errorhandler ? (
         <h1>Please log in to see the page of this track</h1>
       ) : (
         <div>
-          <div className="images-and-descr">
-            <div className="slider">
+          <Grid container sx={{margin:"0", marginTop:"20px", marginBottom:"20px"}} spacing={2}  className="images-and-descr">
+            <Grid  minWidth={"300px"} maxWidth={"400px"} xs={12} sm={10} md={8} lg={5} xl={3} className="slider">
               {Array.from({ length: img_number }, (_, i) => (
                 <img
                   
@@ -297,41 +303,49 @@ export default function CertainTrack(props) {
               {/*    <img onClick={changeSlide} src={`http://localhost:3000/img?user_id=${id}&number=0`} className="images slide" alt="image" />
           <img onClick={changeSlide}src={`http://localhost:3000/img?user_id=${id}&number=1`} className="images slide" alt="image" />
           <img onClick={changeSlide}src={`http://localhost:3000/img?user_id=${id}&number=2`} className="images slide" alt="image" /> */}
-            </div>{" "}
-            <div className="desc-and-rating">
-              <Typography variant="h5" sx={{margin:"10px", marginTop:"25px"}}>{desc}</Typography>{" "}
+            </Grid>{" "}
+            <Grid flexDirection={"column"} display={"flex"} className="desc-and-rating" minWidth={"300px"} maxWidth={"350px"}  xs={12} sm={10} md={8} lg={5} xl={4}>
+              <Typography variant="h5" sx={{margin:"10px", marginTop:"25px",  whiteSpace: 'pre-line', overflowWrap: 'anywhere'}}>{desc}</Typography>{" "}
               <Box>
               <hr />
               <Box sx={{display: "flex", justifyContent:"space-between", alignItems:"center"}}>
               <Next7DaysDropdown getUpData={setRightDay} />
-              <Typography variant="h6" sx={{margin:"10px"}}>
+              <Typography variant="h6" sx={{margin:"10px", whiteSpace: 'pre-line', overflowWrap: 'anywhere'}}>
                 Rating 4,5
               </Typography>
-              <Typography variant="h6" sx={{margin:"10px"}}>
+              <Typography variant="h6" sx={{margin:"10px", whiteSpace: 'pre-line', overflowWrap: 'anywhere'}}>
                 thewebpage@ofthissite.com
               </Typography>
               
               </Box>
               </Box>
-            </div>
-          </div>
+            </Grid>
+
+          </Grid>
           
-          <div className="booking-timelines">
+          <Grid container spacing={2}   className=" contanier booking-timelines">
             {h3s.map((h3) => (
+              <Grid item minWidth={"250px"} padding={0} xs={12} sm={6} md={3} lg={2} xl={1.4} alignItems={"center"}>
               <Paper
                 elevation={3}
                 className="timeline-div"
+                
               >
+                <Box display={"flex"} justifyContent={"space-between"}>
                 <h3
                   className="timeline"
                   key={h3.id}
                   style={{ color: h3.color }}
-                  onClick={
-                    h3.color === "red" ? () => {} : () => handleClick(h3.id)
-                  }
+                  
                 >
                   {h3.text}
                 </h3>
+                <Fab style={{ width: '36px', height: '20px', margin:"3px" }}  color="primary" aria-label="add" onClick={
+                    h3.color === "red" ? () => {} : () => handleClick(h3.id)
+                  }>
+  <AddIcon />
+</Fab>
+</Box>
                 <ExpandMore
                   expand={expanded == h3.id ? true : false}
                   onClick={() => handleExpandClick(h3.id)}
@@ -346,10 +360,12 @@ export default function CertainTrack(props) {
                   ))}
                 </Collapse>
               </Paper>
+              </Grid>
             ))}
-          </div>
+          </Grid>
         </div>
       )}
+     
     </div>
   );
 }

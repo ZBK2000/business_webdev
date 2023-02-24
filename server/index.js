@@ -55,7 +55,10 @@ app.get("/", async (req, res)=>{
 })
 app.post("/signup", async function(req, res){
     const newUser = new UserModel(req.body)
-    const existingUser = await UserModel.findOne({user: newUser.user, password: newUser.password});
+    const existingUser = await UserModel.findOne({ $or: [
+      { user: newUser.user },
+      { password: newUser.password }
+    ]});
     if(existingUser){
         return res.status(409).send("User already exists")
     }
@@ -64,14 +67,12 @@ app.post("/signup", async function(req, res){
 })
 app.post("/login", async function(req, res){
     console.log(req.body)
-    UserModel.exists({user: req.body.user, password:req.body.password}, function (err, result) {
-        if (err) return handleError(err);
-        if(result){
-          res.send("Successfully logged in!");
-        } else {
-          res.send("something went wrong");
-        }
-      });
+    const user = await UserModel.findOne({ password:req.body.password})
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send('User not found');
+    }
 })
 
 app.post("/tracks", async function(req, res){

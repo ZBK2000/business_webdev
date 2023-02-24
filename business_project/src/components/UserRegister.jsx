@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { useState } from "react";
 import Header from "./Header";
 
+
 export default function UserRegister (){
     const [user, setUser]= useState("")
    const  [password, setPassword]= useState("")

@@ -3,6 +3,7 @@ import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import AvailablePlaces from "./avalaiblePlaces";
 import { TextField } from "@mui/material";
+import { UserAuth } from "../context/AuthContext";
 
 
 export default function register (props){
@@ -13,6 +14,8 @@ export default function register (props){
         const [description, setDescription] = useState("");
         const [slots, setSlots] = useState(4)
         const [img, setImg] =useState("")
+        const {user} = UserAuth()
+        const userName = user ? user.displayName: ""
 
         const avalaibleTimes_initial = [
             { id: 1, text: "8-10 ", color: "black" ,slots: ["","","",""]},
@@ -63,7 +66,7 @@ export default function register (props){
             console.log(img[i])
             formData.append("img_urls", img[i]);
            }
-            const data = {track: {name, price, location, description, slot_number: slots, booked: avalaibleTimesFor7Days, /* next7Days, */ }, user:props.getDownData2};
+            const data = {track: {name, price, location, description, slot_number: slots, booked: avalaibleTimesFor7Days, /* next7Days, */ }, user:userName};
           /*   formData.append("track[name]", data.track.name);
             formData.append("track[price]", data.track.price);
             formData.append("track[location]", data.track.location);
@@ -104,7 +107,7 @@ export default function register (props){
             <form onSubmit={registerTrack}>
                 <label htmlFor="name">Name:</label>
                 <input type="text" id="name" onChange={(e) => setName(e.target.value)} />
-                {/* <TextField id="outlined-basic" sx={{color: "#3c3c3c" , "& .input:focus !important":   {color:"#3c3c3c"}}} label="Location"  variant="standard">Name</TextField> */}
+                 {/* <TextField id="outlined-basic" type="number" sx={{color: "#3c3c3c" , "& .input:focus !important":   {color:"#3c3c3c"}}} label="Location"  variant="outlined">Name</TextField>  */}
                 <label htmlFor="price">Price:</label>
                 <input type="number" id="price" onChange={(e) => setPrice(e.target.value)} />
                 <label htmlFor="location">Location:</label>

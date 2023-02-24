@@ -15,7 +15,11 @@ import { height } from "@mui/system";
 import Filter from "./Filter";
 import { useEffect } from "react";
 import { useTheme } from "@emotion/react";
+import { UserAuth } from "../context/AuthContext";
+import { Grid } from "@mui/material";
+import SimpleMap from "./GoogleMap";
 export default function MainPage (props){
+  const {user} = UserAuth()
   const theme = useTheme()
     const navigate = useNavigate()
     const [id, setId] = useState("")
@@ -23,7 +27,7 @@ export default function MainPage (props){
     console.log(typeof props.allTrack)
     console.log(props.allTrack, props.getDownData, "yeaaah")
     function reNavigate(item){
-        if (props.getDownData=="Successfully logged in!"){
+        if (user){
             navigate(`/tracks/${item.name}`)
         }
         else{
@@ -64,7 +68,8 @@ console.log(filteredData)
      const newTracks = filteredData.map(function(item){
         console.log(item.name)
         return (
-                <Card className="tracks" sx={{ maxWidth: 345, backgroundColor: theme.palette.secondary.main}} onClick={() => reNavigate(item)} key={item.name}>
+          <Grid item  padding={0} xs={12} sm={6} md={4} lg={3} xl={2.2}>
+                <Card className="tracks"  sx={{  backgroundColor: theme.palette.secondary.main, margin:"auto"}} onClick={() => reNavigate(item)} key={item.name}>
                   <CardMedia component="img"
                     sx={{ height: 140 }}
                     
@@ -91,6 +96,8 @@ console.log(filteredData)
                     <Button size="small">Learn More</Button>
                   </CardActions> */}
                 </Card>
+                </Grid>
+    
               
           /*   <div className="tracks" onClick={() => reNavigate(item)} key={item.name}>
              {props.getDownData=="Successfully logged in!"?<Link className="links" to={`/tracks/${item.name}`}><h3>{item.name}</h3></Link>:<Link className="links" to={`/login`}><h3>{item.name}</h3></Link>} 
@@ -105,9 +112,16 @@ console.log(filteredData)
         <Header title="Fantastic business" success={props.getDownData} name={props.getDownData2} />
         
         <Filter getUpData={setFilterItems}/>
-    <div className="container">{newTracks}</div>
-   
-
-       
+    <Grid sx={{marginLeft: '0px', marginRight:'10px', width:1}} container spacing={2}  className="container">{newTracks}</Grid>
+   {/* 
+            <SimpleMap locations={ [
+    { lat: 47.497912, lng: 19.040235 }, // Budapest Parliament
+    
+    { lat: 47.5142, lng: 19.0373 }, // St. Stephen's Basilica
+    { lat: 47.4984, lng: 19.0408 }, // Chain Bridge
+    { lat: 47.4849, lng: 19.0402 }, // Gellért Hill
+  ]
+  }/> 
+        */}
     </div>)
 }

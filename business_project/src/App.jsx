@@ -11,6 +11,11 @@ import Header from './components/Header'
 import User from './components/User'
 import Footer from './components/Footer'
 import ButtonAppBar from './components/NewLogin'
+import UserRegisterWithFirebase from './components/CreateFirebase'
+import { AuthContextProvider } from './context/AuthContext'
+import LoginWithFirebase from './components/loginWithFirebase'
+import ProtectdRoute from './components/ProtectedRoute'
+import NeedToLogIn from './components/NeedToLogIn'
 
 
 
@@ -23,8 +28,7 @@ function App() {
   const [slots, setSlots] = useState(4)
   console.log(tracks, success)
   console.log(change)
- 
-  
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -48,6 +52,7 @@ function App() {
         </div> 
     )}) */
   return (
+    <AuthContextProvider>
     <div >
     <div className='App'>
       {/* <Header title="Awesome" success={success} name={success}/> */}
@@ -56,11 +61,14 @@ function App() {
     <Route path='/' element={<MainPage allTrack={tracks} getDownData={success} getDownData2={name}/>}/>  
     <Route path='/track' element={<Track getDownData={success} getDownData2={name}/>}/>
     <Route path='/register' element={<Register getUpData={setTracks}  getUpData2={setSlots}  getDownData={success} getDownData2={name}/>}/>
-    <Route path='/tracks/:id' element={<CertainTrack allTrack={tracks} getDownData={success} getDownData2={name} /* getDownData3={slots}  */getUpData={setChange}/>}/>
-    <Route path='/signup' element={<UserRegister />}/> 
-    <Route path='/login/:name' element={<Login getUpData={setSuccess} getUpData2={setName}/>}/>
-    <Route path='/user' element={<User getDownData={success} getDownData2={name} getUpData={setChange}/>}/>
+    <Route path='/tracks/:id' element={<ProtectdRoute><CertainTrack allTrack={tracks} getDownData={success} getDownData2={name} /* getDownData3={slots}  */getUpData={setChange}/></ProtectdRoute>}/>
+    <Route path='/signup' element={<UserRegisterWithFirebase />}/> 
+    <Route path='/login/:name' element={<LoginWithFirebase getUpData={setSuccess} getUpData2={setName}/>}/>
+    <Route path='/user' element={<ProtectdRoute> <User getDownData={success} getDownData2={name} getUpData={setChange}/></ProtectdRoute>}/>
     <Route path='/test' element={<ButtonAppBar/>}/>
+   {/*  <Route path='/firebasesignup' element={<UserRegisterWithFirebase/>}/>
+    <Route path='/firebaselogin' element={<LoginWithFirebase/>}/> */}
+    <Route path='/needtologin' element={<NeedToLogIn/>}/>
 
     </Routes>
     </div>
@@ -68,6 +76,7 @@ function App() {
     <Footer/>
     </div> */}
      </div>
+     </AuthContextProvider>
       
     
   )

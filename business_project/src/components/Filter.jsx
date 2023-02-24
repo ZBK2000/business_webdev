@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { Button, Collapse, Fab, TextField, Typography } from '@mui/material';
+import { Button, Collapse, Fab, Grid, TextField, Typography } from '@mui/material';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -45,12 +45,16 @@ export default function Filter (props){
         
            {!expanded?<FilterAltOffIcon/>: <FilterAltIcon/>}
       </Button>
-        
+       
+      
         <Collapse sx={{ width: "100%"}} in={expanded} timeout="auto">
+        
            <Box sx={{   padding: 0,
-  margin: 0, width: "100%" , display:'flex',height:"130px", gap: "40px", justifyContent: "center", alignItems: "center"}}>
-        <Typography>Slots</Typography>
-        <Slider sx={{  width: "25%" ,padding: 0,
+  marginBottom: '10px', width: "100%" , display:'flex', gap: "40px", justifyContent: "center", alignItems: "center"}}>
+    <Grid container spacing={4}  className="container" >
+      
+        <Grid item style={{width: "50%"}} padding={0} xs={2} sm={1} md={0.5}><Typography>Slots</Typography></Grid>
+        <Grid item paddingRight={"15px !important"} alignContent={"center"} padding={0} xs={9} sm={4.5 } md={3}><Slider   sx={{ padding: 0,
   margin: 0 }}
   min={0}
   max={20}
@@ -60,9 +64,9 @@ export default function Filter (props){
           valueLabelDisplay="on"
           
           //getAriaValueText={valuetext}
-        />
-        <Typography htmlFor="">Price</Typography>
-           <Slider sx={{ width: "25%", margin:"0px"}}
+        /></Grid>
+        <Grid item  padding={0} xs={2}  sm={1} md={0.5}> <Typography htmlFor="">Price</Typography></Grid>
+        <Grid item paddingRight={"15px !important"} padding={0} xs={9}  sm={4.5} md={3}> <Slider sx={{ margin:"0px"}}
            min={0}
            max={30000}
            step={100}
@@ -71,12 +75,18 @@ export default function Filter (props){
         onChange={handleChange2}
         valueLabelDisplay="on"
         //getAriaValueText={valuetext}
-      />
-      <TextField  sx={{color: "#3c3c3c" , "& .input:focus !important":   {color:"#3c3c3c"}}}  id="outlined-basic" onChange={(e) => setLocation(e.target.value)}  value={location} label="Location" variant="outlined" />
-      <TextField sx={{color: "#3c3c3c" , "& .input:focus !important":   {color:"#3c3c3c"}}}  id="outlined-basic" onChange={(e) => setName(e.target.value)}  value={name} label="Name" variant="outlined" />
-      <Button sx={{color: 'black' }} onClick={getUpData} variant="text">Filter</Button>
+      /></Grid>
+        <Grid item  padding={0} xs={6}  sm={2} md={1.5}paddingTop={"20px !important"}><TextField  sx={{color: "#3c3c3c" , "& .input:focus !important":   {color:"#3c3c3c"}}}  id="outlined-basic" onChange={(e) => setLocation(e.target.value)}  value={location} label="Location" variant="outlined" /></Grid>
+        <Grid item  padding={0} xs={6}  sm={2} md={1.5}paddingTop={"20px !important"}><TextField sx={{color: "#3c3c3c" , "& .input:focus !important":   {color:"#3c3c3c"}}}  id="outlined-basic" onChange={(e) => setName(e.target.value)}  value={name} label="Name" variant="outlined" /></Grid>
+        <Grid item  padding={0} xs={12}  sm={2}md={1.5}><Button sx={{color: 'black' }} onClick={getUpData} variant="text">Filter</Button></Grid>
+        
+       
+          
+      
+
+        </Grid>
       </Box>
-    
+      
         </Collapse></Box>
       );
     

@@ -1,18 +1,28 @@
 
-import { Button, Paper, Typography } from "@mui/material";
+import { Button, Grid, Paper, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
 import Header from "./Header";
 
 export default function User (props){
     const navigate = useNavigate()
-
-    const id = props.getDownData2
+    const {user} = UserAuth()
+    const id = user ? user.displayName: ""
+   /*  try {
+        const id = user.displayName 
+    } catch (error) {
+        const id = ""
+    } */
+        
+   
+    
     const [userData, setUserData] = useState(null);
     const [render, setRender] = useState("ha")
-    console.log(render, "first")
-
+    console.log(render,userData, "first")
+    
     async function cancel(item){
         const nameOfTrack = item.split(": ")[0]
         const timeline = item.split(": ")[1].split(" ").slice(1).join(" ")
@@ -53,6 +63,7 @@ export default function User (props){
         setRender([item, "deleted"])}
     }
     console.log(render, "nyii")
+    
     useEffect(()=>{    async function fetching_user(){
         const response = await fetch("http://localhost:3000/user",  {
             method: "POST",
@@ -75,19 +86,24 @@ export default function User (props){
 
     
     return ( <div > <Header title="account info" success={props.getDownData} name={props.getDownData2}></Header>
-        <div className="userData">
+        <Grid container  margin={"15px"} width={"90%"}display={"flex"} flexDirection={"column"} >
+            <Grid sx={{backgroundColor:"#ebebeb", borderRadius:"10px", padding:"10px"}} item maxWidth={"500px"}>
+                <Box display={"flex"} justifyContent={"center"}> 
+            <Typography sx={{marginBottom:"15px"}} variant="h4">Hi {id}</Typography>
+            </Box> 
         {userData ? (
           <>
-          <Typography variant="h5" className="userTrackInfo-1">your tracks:</Typography>
+          <Typography variant="h5" >your tracks:</Typography>
             {userData.tracks}
-            <Typography variant="h5" className="userTrackInfo-2">booked tracks:</Typography>
+            <Typography variant="h5" marginTop={"20px"}>booked tracks:</Typography>
             {userData.booked_tracks}
             <div></div>
           </>
         ) : (
-          <div><Typography>Please log in to see user information</Typography></div>
+          <div><Typography>error</Typography></div>
         )}
-      </div>
+        </Grid>
+      </Grid >
     
        
        
