@@ -68,7 +68,7 @@ export default function UserRegisterWithFirebase (){
             />
                 <label htmlFor="price"><Typography>Password:</Typography> </label>
                 <input type="password" id="price" onChange={(e) => setPassword(e.target.value)} />
-                <button><Typography>Submit</Typography> </button></div>
+                <button><Typography>Create Account</Typography> </button></div>
             </form> : ""}
             {user && <Typography sx={{marginTop:"15px"}} variant="h5" className="success">successfully created</Typography>}
             

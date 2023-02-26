@@ -75,9 +75,9 @@ export default function User (props){
     const data= await response.json()
     console.log(data, "huhu")
         setUserData({booked_tracks: data.booked_tracks.map(function(item){
-         return(<Paper className="booked-times" elevation={6}><h2  className="booked-times-h2" ><li>{item}</li></h2><Button className="cancel-see" onClick={()=>cancel( item)} variant="text">X</Button><Button  onClick={()=>see( item)} className="cancel-see" variant="text">See</Button></Paper>)
+         return(<Paper sx={{margin: "10px"}} className="booked-times" elevation={6}><h2  className="booked-times-h2" ><li>{item}</li></h2><Button className="cancel-see" onClick={()=>cancel( item)} variant="text">X</Button><Button  onClick={()=>see( item)} className="cancel-see" variant="text">See</Button></Paper>)
         }), tracks:data.tracks.map(function(item){
-            return(<Paper className="booked-times" elevation={6}><h2 className="booked-times-h2"><li>{item}</li></h2><Button className="cancel-see"  onClick={()=>deleteTrack( item)}   variant="text">X</Button><Button onClick={()=>see( item)} className="cancel-see" variant="text">See</Button></Paper>)
+            return(<Paper sx={{margin: "10px"}} className="booked-times" elevation={6}><h2 className="booked-times-h2"><li>{item}</li></h2><Button className="cancel-see"  onClick={()=>deleteTrack( item)}   variant="text">X</Button><Button onClick={()=>see( item)} className="cancel-see" variant="text">See</Button></Paper>)
            })} )}
         fetching_user()}, [render])
     

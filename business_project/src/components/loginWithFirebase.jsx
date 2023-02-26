@@ -56,7 +56,7 @@ export default function LoginWithFirebase(props) {
         success={registrateds}
         name={email}
       />
-      { !user ? (  <div>{name!="home" ? <Typography>Please log in to see the page of that track!</Typography>:""}
+      { !user ? (  <div>{name!="home" ? <Typography margin={"15px"}>Please log in to see the page of that track!</Typography>:""}
         <form onSubmit={SignInUser}>
           <div>
             <label htmlFor="names"><Typography>Email:</Typography> </label>
@@ -77,7 +77,7 @@ export default function LoginWithFirebase(props) {
               id="prices"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button><Typography>Submit</Typography> </button>
+            <button><Typography>LOG IN</Typography> </button>
           </div>
         </form></div>
       ) : (

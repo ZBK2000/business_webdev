@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { UserAuth } from "../context/AuthContext";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 ;
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -54,6 +55,9 @@ export default function Header (props){
         }
         
     }
+    function navigateToHelp(){
+      navigate("/help")
+    }
     const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -74,7 +78,7 @@ export default function Header (props){
           {props.title == "Fantastic business"?"": props.title}
             </Typography>
             <Box>
-         
+            <Button sx={{ display: { xs: 'none', md: 'inline', marginTop:"5px" }}}  onClick={navigateToHelp} color="inherit"> <HelpOutlineIcon /></Button>
             {user ?"":<Button sx={{ display: { xs: 'none', md: 'inline' }}} onClick={(e)=>navigateFunction(e, props.name)} color="inherit">LOGIN</Button>}
 {user?"":<Button sx={{ display: { xs: 'none', md: 'inline' }}} onClick={(e)=>navigateFunction(e, props.name)} color="inherit">SIGN UP</Button> }
 
@@ -105,7 +109,8 @@ export default function Header (props){
 {user ?<MenuItem    onClick={(e)=>navigateFunction(e, props.name)} color="inherit"><AccountCircle /> </MenuItem>: "" }
 {user ?<MenuItem    onClick={(e)=>navigateFunction(e, props.name)} color="inherit">REGISTER TRACK</MenuItem>: "" }
 
-{user? <MenuItem onClick={logoutFromUser} color="inherit"> Log Out</MenuItem>: "" }
+{user? <MenuItem onClick={logoutFromUser} color="inherit"> LOG OUT</MenuItem>: "" }
+<MenuItem    onClick={navigateToHelp} color="inherit"> <HelpOutlineIcon/></MenuItem>
       </Menu>
             </Box>
           </Toolbar>

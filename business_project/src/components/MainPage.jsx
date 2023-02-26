@@ -54,8 +54,8 @@ let filteredData = [];
       (item.price < filterItems[1][1] && item.price > filterItems[1][0] )
     ) {
       filteredData.push(item);
-    } else if (!shouldFilterLocation && !shouldFilterName && (item.slot_number < filterItems[0][1] && item.slot_number > filterItems[0][0] ) && 
-    (item.price < filterItems[1][1] && item.price > filterItems[1][0] )) {
+    } else if (!shouldFilterLocation && !shouldFilterName && (item.slot_number <= filterItems[0][1] && item.slot_number >= filterItems[0][0] ) && 
+    (item.price <= filterItems[1][1] && item.price >= filterItems[1][0] )) {
       // if both filter criteria are empty, include the item in the filtered data
       filteredData.push(item);
     }
@@ -68,7 +68,7 @@ console.log(filteredData)
      const newTracks = filteredData.map(function(item){
         console.log(item.name)
         return (
-          <Grid item  padding={0} xs={12} sm={6} md={4} lg={3} xl={2.2}>
+          <Grid item  padding={"8px !important"} xs={12} sm={6} md={4} lg={3} xl={2.2}>
                 <Card className="tracks"  sx={{  backgroundColor: theme.palette.secondary.main, margin:"auto"}} onClick={() => reNavigate(item)} key={item.name}>
                   <CardMedia component="img"
                     sx={{ height: 140 }}

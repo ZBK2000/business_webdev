@@ -16,6 +16,7 @@ import { AuthContextProvider } from './context/AuthContext'
 import LoginWithFirebase from './components/loginWithFirebase'
 import ProtectdRoute from './components/ProtectedRoute'
 import NeedToLogIn from './components/NeedToLogIn'
+import Help from './components/Help'
 
 
 
@@ -69,6 +70,7 @@ function App() {
    {/*  <Route path='/firebasesignup' element={<UserRegisterWithFirebase/>}/>
     <Route path='/firebaselogin' element={<LoginWithFirebase/>}/> */}
     <Route path='/needtologin' element={<NeedToLogIn/>}/>
+    <Route path='/help' element={<Help/>}/>
 
     </Routes>
     </div>

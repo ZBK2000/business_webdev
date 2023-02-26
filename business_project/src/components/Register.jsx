@@ -2,7 +2,7 @@ import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import AvailablePlaces from "./avalaiblePlaces";
-import { TextField } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import { UserAuth } from "../context/AuthContext";
 
 
@@ -105,20 +105,20 @@ export default function register (props){
                 <Header title="new track registration" success={props.getDownData} name={props.getDownData2}/>
          
             <form onSubmit={registerTrack}>
-                <label htmlFor="name">Name:</label>
+                <label htmlFor="name"><Typography>Name:</Typography></label>
                 <input type="text" id="name" onChange={(e) => setName(e.target.value)} />
                  {/* <TextField id="outlined-basic" type="number" sx={{color: "#3c3c3c" , "& .input:focus !important":   {color:"#3c3c3c"}}} label="Location"  variant="outlined">Name</TextField>  */}
-                <label htmlFor="price">Price:</label>
+                <label htmlFor="price"><Typography>Price:</Typography></label>
                 <input type="number" id="price" onChange={(e) => setPrice(e.target.value)} />
-                <label htmlFor="location">Location:</label>
+                <label htmlFor="location"><Typography>Location:</Typography></label>
                 <input type="text" id="location" onChange={(e) => setLocation(e.target.value)} />
-                 <label htmlFor="slots">Maximum slots:</label>
+                 <label htmlFor="slots"><Typography>Maximum slots:</Typography></label>
                 <input type="number" step="1" id="slots" onChange={(e) => setSlots(e.target.value)} /> 
-                <label htmlFor="img">Images:</label>
+                <label htmlFor="img"><Typography>Images:</Typography></label>
                 <input type="file" id="img" multiple onChange={(e) => setImg(e.target.files)} />
-                <label htmlFor="desc">Description:</label>
+                <label htmlFor="desc"><Typography>Description:</Typography></label>
                 <textarea  id="desc" onChange={(e) => setDescription(e.target.value)} />
-                <button>Submit</button>
+                <button><Typography>Submit</Typography></button>
             </form>
             
             </div>
